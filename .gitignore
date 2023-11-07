@@ -1,1 +1,3 @@
 Don'tSendToGitHub.py
+__pycache__/
+.env
