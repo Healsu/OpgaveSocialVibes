@@ -1,27 +1,15 @@
 from Database import FireStore, Increment
-from firebase_admin import firestore
-import datetime
-
-
-
-
+from Model.Profile import Profile
 
 def saveProfile(data):
     db = FireStore.getConnection()
     collection = db.collection('Profiles')
-    latestDocID = Increment.getLatestDocument(db, 'Profiles')
-    stringLatestDocID = str(latestDocID+1)
-    print(stringLatestDocID)
+    latestDocContentID = Increment.getLatestDocument(db, 'Profiles')
+    id = str(latestDocContentID+1)
+    #create Model to reinforce layout of the object in the database:
+    profile = Profile(id, data["Name"], data["FriendIDs"], data["ChatRoomIDs"])
 
-
-    res = collection.document(stringLatestDocID).set({ #inserting document
-    'ID': stringLatestDocID,
-    'Name': data['Name'],
-    'FriendIDs': data['FriendIDs'],
-    'ChatRoomIDs': data['ChatRoomIDs'],
-    'TimeStamp' : datetime.datetime.now().strftime("%Y-%m-%d  %H-%M-%S")
-    })
-    print(res)
+    res = collection.document().set( #inserting document
+        profile.toDict()
+    )
     FireStore.closeConnection()
-
-

@@ -8,8 +8,7 @@ def getLatestDocument(db, CollectionName):
         results = query.stream()
         latest_doc = next(results)
         data = latest_doc.to_dict()
-        doc_id = latest_doc.id
-        return int(doc_id)
+        return int(data["ID"])
     except:
         print("There are no existing docs, set value to 0")
         return 0

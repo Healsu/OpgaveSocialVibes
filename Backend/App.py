@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from Controller.Profile import profile
+from Controller.ProfileController import profile
 
 app = Flask(__name__)
 
