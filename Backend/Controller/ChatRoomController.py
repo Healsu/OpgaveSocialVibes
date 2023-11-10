@@ -1,5 +1,54 @@
-from flask import Flask, request, jsonify, render_template
+from flask import request, jsonify, Blueprint
+from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction
 
-chatRoom = Flask(__name__)
-#Can be either individual Chatroom or group chatroom.
 
+chatRoom = Blueprint('chatRoom', __name__)
+
+
+@chatRoom.route("/create-chat", methods=["POST"])
+def createChatroom():
+    try:
+        request_body = request.get_json()
+
+        CreateChatRoomAction.craeteChatroom(request_body)
+        return jsonify({'message': 'Chatroom created successfully', 'data': request_body})
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': 'Chatroom creation failed', 'data': request_body})
+    
+
+@chatRoom.route("/<chatroom_id>/delete-chat", methods=["DELETE"])
+def deleteChatroom(chatroom_id):
+    try:
+        DeleteChatRoomAction.deleteChatroom(chatroom_id)
+
+        return jsonify({'message': 'Chatroom deleted'}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'Could not delete chatroom'}), 500
+
+
+@chatRoom.route("/<chatroom_id>/join-chatroom", methods=["PATCH"])
+def addUserToChatroom(chatroom_id):
+    try:    
+        user_id = request.get_json().get("user_Id")
+        
+        AddUserToChatroomAction.addUser(str(chatroom_id), str(user_id))
+
+        return jsonify({'message': 'User added to chatroom'}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'Could not add user to chatroom'}), 500
+
+
+@chatRoom.route("/<chatroom_id>/leave-chatroom", methods=["PATCH"])
+def removeUserFromChatroom(chatroom_id):
+    try:
+        user_id = request.get_json().get("user_Id")
+
+        LeaveChatRoomAction.leave(str(chatroom_id), str(user_id))
+
+        return jsonify({'message': 'User left the chatroom'}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'User could not leave the chatroom'}), 500
