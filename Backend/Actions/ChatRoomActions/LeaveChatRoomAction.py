@@ -1,23 +1,19 @@
 from Database import FireStore, Querys
-from google.cloud.firestore_v1.base_query import FieldFilter
 
 def leave(chatroom_id, user_id):
-    collectionName = 'Chatrooms'
     db = FireStore.getConnection()
-    collection = db.collection(collectionName)
+    
+    chatroom_participants_ref = db.child(f"Chatroom Participants/{chatroom_id}")
 
-    #get the chatroom docs
-    chatroom_data, chatroom_doc_id = Querys.getById(db, collectionName, chatroom_id)
+    participants_data = chatroom_participants_ref.get()
 
-    #get the field with profile ids from the dictionary
-    participants = chatroom_data['ParticipantsId']
+    user_profile = Querys.getById(db, "Profiles", user_id)
+    if user_profile in participants_data:
+        participants_data.remove(user_profile)
+    else:
+        raise Exception("That user is already in the chatroom")
+    chatroom_participants_ref.set(participants_data)
 
-    #the array needed for the chatroom to change:
-    participants.remove(user_id)
-    print(participants)
-    #Remove from the chatroom
-    collection.document(chatroom_doc_id).update({'ParticipantsId': chatroom_data['ParticipantsId']})
 
-    #Remove from the profile chatroom list, inverted since it removes everything inside the list so can't use the participants list here
-    Querys.addChatroomIdToParticipantsProfile(db, chatroom_data['ID'], [user_id], True)
+
     FireStore.closeConnection()

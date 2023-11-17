@@ -1,6 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction
-
+from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction, GetChatroom
 
 chatRoom = Blueprint('chatRoom', __name__)
 
@@ -11,10 +10,10 @@ def createChatroom():
         request_body = request.get_json()
 
         CreateChatRoomAction.craeteChatroom(request_body)
-        return jsonify({'message': 'Chatroom created successfully', 'data': request_body})
+        return jsonify({'message': 'Chatroom created successfully', 'data': request_body}), 200
     except Exception as e:
         print(f"An error occurred: {e}")
-        return jsonify({'message': 'Chatroom creation failed', 'data': request_body})
+        return jsonify({'message': 'Chatroom creation failed', 'data': request_body}), 500
     
 
 @chatRoom.route("/<chatroom_id>/delete-chat", methods=["DELETE"])
@@ -30,7 +29,7 @@ def deleteChatroom(chatroom_id):
 
 @chatRoom.route("/<chatroom_id>/join-chatroom", methods=["PATCH"])
 def addUserToChatroom(chatroom_id):
-    try:    
+    try:
         user_id = request.get_json().get("user_Id")
         
         AddUserToChatroomAction.addUser(str(chatroom_id), str(user_id))
@@ -52,3 +51,17 @@ def removeUserFromChatroom(chatroom_id):
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'User could not leave the chatroom'}), 500
+
+
+@chatRoom.route("/<chatroom_id>/get")
+def getChatroom(chatroom_id):
+    try:
+        chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))
+
+        return jsonify({'message': 'Chatroom retrieved', 'chatroom_data': chatroom_data}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'There is no chatroom with that id'}), 500
+    
+
+#Add delete chat messages to delete chatroom
