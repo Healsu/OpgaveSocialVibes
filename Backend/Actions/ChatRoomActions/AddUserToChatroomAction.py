@@ -1,26 +1,21 @@
 from Database import FireStore, Querys
-from google.cloud.firestore_v1.base_query import FieldFilter
+from google.cloud import firestore
 
-def addUser(id, user_id):
+def addUser(chatroom_id, user_id):
     db = FireStore.getConnection()
-    collectionName = 'Chatrooms'
-    collection = db.collection(collectionName)
+    
+    chatroom_participants_ref = db.child(f"Chatroom Participants/{chatroom_id}")
 
-    #get the chatroom docs
-    chatroom_data, chatroom_id = Querys.getById(db, collectionName, id)
-    #check so the id isen't already in the list
-    contains_user_id = chatroom_data['ParticipantsId'].count(user_id)
+    participants_data = chatroom_participants_ref.get()
 
-    if contains_user_id == 0:
-        chatroom_data['ParticipantsId'].append(user_id)
-        collection.document(chatroom_id).update({'ParticipantsId': chatroom_data['ParticipantsId']})
-        #add chatroom id to profile chatroom list
-        Querys.addChatroomIdToParticipantsProfile(db, chatroom_data['ID'],chatroom_data['ParticipantsId'], False)
-
-        FireStore.closeConnection()
+    user_profile = Querys.getById(db, "Profiles", user_id)
+    if user_profile not in participants_data:
+        participants_data.append(user_profile)
     else:
-        FireStore.closeConnection()
-        raise Exception("The user already exist in the chatroom")
+        raise Exception("That user is already in the chatroom")
+    chatroom_participants_ref.set(participants_data)
+
+    FireStore.closeConnection()
 
         
 

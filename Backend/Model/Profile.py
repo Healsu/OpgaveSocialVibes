@@ -1,18 +1,14 @@
 import datetime
 
 class Profile:
-    def __init__(self, id, name, friendIds, chatRoomIds):
-        self.id = id
+    def __init__(self, name):
         self.name = name
-        self.friendIds = friendIds
-        self.chatRoomIds = chatRoomIds
         self.timeTable = datetime.datetime.now().strftime("%Y-%m-%d  %H-%M-%S")
     
     def toDict(self):
-        return {
-           'ID': self.id,
-           'Name': self.name,
-           'FriendIds': self.friendIds,
-           'ChatRoomIds': self.chatRoomIds,
-           'TimeStamp': self.timeTable
-       }
+        data = {
+            'Name': self.name,
+            'TimeStamp': self.timeTable
+        }
+        
+        return data
