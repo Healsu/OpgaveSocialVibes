@@ -12,6 +12,7 @@ def addUser(chatroom_id, user_id):
     if user_profile not in participants_data:
         participants_data.append(user_profile)
     else:
+        FireStore.closeConnection()
         raise Exception("That user is already in the chatroom")
     chatroom_participants_ref.set(participants_data)
 
