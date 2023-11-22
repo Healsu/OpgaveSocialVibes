@@ -29,3 +29,4 @@ def craeteChatroom(data):
     chatroom_participants_ref.child(chatroom_ref_id).set(participants_objects)
 
     FireStore.closeConnection()
+    #try catch
