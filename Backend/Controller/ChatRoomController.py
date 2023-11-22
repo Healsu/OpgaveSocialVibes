@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction, GetChatroom
+from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction, GetChatroom, GetChatroomWithUserAction
 
 chatRoom = Blueprint('chatRoom', __name__)
 
@@ -63,5 +63,15 @@ def getChatroom(chatroom_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
     
+@chatRoom.route("<user_id>/user-get")
+def getUserChatrooms(user_id):
+    try:
+        chatroom_data = GetChatroomWithUserAction.userInChatroom(str(user_id))
+        print("hit")
+        return jsonify({'message': 'Chatroom retrieved', 'chatroom_ids': chatroom_data}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'There is no chatroom with that id'}), 500
+
 
 #Add delete chat messages to delete chatroom
