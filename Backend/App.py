@@ -3,6 +3,7 @@ from Controller.ProfileController import profile
 from Controller.ChatRoomController import chatRoom
 from Controller.MessageController import message
 from WebSocket.MessageEvents import socketio
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
@@ -10,9 +11,12 @@ def create_app():
     app.config['DEBUG'] = True
     app.config['SECRET_KEY'] = 'secret!'
 
+    CORS(app, origins=["http://localhost:8100/*"])
+
     app.register_blueprint(profile, url_prefix='/profile')
     app.register_blueprint(chatRoom, url_prefix='/chatroom')
     app.register_blueprint(message, url_prefix='/message')
+
 
     socketio.init_app(app)
 
