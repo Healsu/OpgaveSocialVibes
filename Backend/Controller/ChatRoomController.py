@@ -67,7 +67,6 @@ def getChatroom(chatroom_id):
 def getUserChatrooms(user_id):
     try:
         chatroom_data = GetChatroomWithUserAction.userInChatroom(str(user_id))
-        print("hit")
         return jsonify({'message': 'Chatroom retrieved', 'chatroom_ids': chatroom_data}), 200
     except Exception as e:
         print(f"An error occurred: {e}")
