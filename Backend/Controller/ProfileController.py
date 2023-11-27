@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.ProfileActions import CreateProfileAction, GetProfileDataAction, GetFriendsListAction
+from Actions.ProfileActions import CreateProfileAction, GetProfileDataAction, GetFriendsListAction, GetPaginatedProfilesAction
 
 profile = Blueprint('profile', __name__)#blueprint is mini flask applications that is driven by the main application
 
@@ -33,6 +33,16 @@ def getFriends(user_id):
         friend_list =  GetFriendsListAction.getFriends(str(user_id))
 
         return jsonify({'message': 'Profile friends Retrieved', 'data': friend_list}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'That profile has no friends'}), 500
+    
+@profile.route("/<start_number>/pagination-get")
+def getPaginatedProfiles(start_number):
+    try:
+        profiles = GetPaginatedProfilesAction.GetFromIndex(start_number)
+
+        return jsonify({'message': 'Profile friends Retrieved', 'profiles': profiles}), 200
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'That profile has no friends'}), 500
