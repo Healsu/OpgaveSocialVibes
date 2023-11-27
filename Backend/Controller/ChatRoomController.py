@@ -63,7 +63,7 @@ def getChatroom(chatroom_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
     
-@chatRoom.route("<user_id>/user-get")
+@chatRoom.route("/<user_id>/user-get")
 def getUserChatrooms(user_id):
     try:
         chatroom_data = GetChatroomWithUserAction.userInChatroom(str(user_id))
@@ -72,5 +72,12 @@ def getUserChatrooms(user_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
 
-
+@chatRoom.route("/<chatroom_id>/get-messages")
+def getChatroomMessages(chatroom_id):
+    try:
+        chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))
+        return jsonify({'message': 'Chatroom retrieved', 'chatroom_messages': chatroom_data["Messages"]}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'There is no chatroom with that id'}), 500
 #Add delete chat messages to delete chatroom

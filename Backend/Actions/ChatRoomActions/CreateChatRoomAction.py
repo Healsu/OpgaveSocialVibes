@@ -6,10 +6,10 @@ def craeteChatroom(data):
     db = FireStore.getConnection()
     participants = data["Participants"]
     admin = Querys.getById(db, "Profiles", data["Admin"])
-    
+    initial_message = "Be the first to type"
 
     #craete the data
-    chatroom = Chatroom(admin, data["Title"])
+    chatroom = Chatroom(admin, data["Title"], initial_message)
     participants_objects = []
     messages = []
 
@@ -32,7 +32,7 @@ def craeteChatroom(data):
     FireStore.closeConnection()
 
     #Create the message and send a static message
-    SendMessageAction.SendMessage(chatroom_ref_id, "Be the first to type", data["Admin"])
+    SendMessageAction.SendMessage(chatroom_ref_id, initial_message, data["Admin"])
 
     
     #try catch

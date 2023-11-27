@@ -2,11 +2,11 @@ import datetime
 
 
 class Chatroom:
-    def __init__(self, admin, title):
+    def __init__(self, admin, title, LatestMessage):
         self.type = None
         self.title = title
         self.admin = admin
-        self.LatestMessage = None
+        self.LatestMessage = LatestMessage
         self.timeTable = datetime.datetime.now().strftime("%Y-%m-%d  %H-%M-%S")
 
     def toDict(self):
