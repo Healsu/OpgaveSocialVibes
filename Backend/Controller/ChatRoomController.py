@@ -16,7 +16,7 @@ def createChatroom():
         return jsonify({'message': 'Chatroom creation failed', 'data': request_body}), 500
     
 
-@chatRoom.route("/<chatroom_id>/delete-chat", methods=["DELETE"])
+@chatRoom.route("/delete-chat/<chatroom_id>", methods=["DELETE"])
 def deleteChatroom(chatroom_id):
     try:
         DeleteChatRoomAction.deleteChatroom(chatroom_id)
@@ -27,7 +27,7 @@ def deleteChatroom(chatroom_id):
         return jsonify({'error': 'Could not delete chatroom'}), 500
 
 
-@chatRoom.route("/<chatroom_id>/join-chatroom", methods=["PATCH"])
+@chatRoom.route("/join-chatroom/<chatroom_id>", methods=["PATCH"])
 def addUserToChatroom(chatroom_id):
     try:
         user_id = request.get_json().get("user_Id")
@@ -40,7 +40,7 @@ def addUserToChatroom(chatroom_id):
         return jsonify({'error': 'Could not add user to chatroom'}), 500
 
 
-@chatRoom.route("/<chatroom_id>/leave-chatroom", methods=["PATCH"])
+@chatRoom.route("/leave-chatroom/<chatroom_id>", methods=["PATCH"])
 def removeUserFromChatroom(chatroom_id):
     try:
         user_id = request.get_json().get("user_Id")
@@ -53,7 +53,7 @@ def removeUserFromChatroom(chatroom_id):
         return jsonify({'error': 'User could not leave the chatroom'}), 500
 
 
-@chatRoom.route("/<chatroom_id>/get")
+@chatRoom.route("/get/<chatroom_id>")
 def getChatroom(chatroom_id):
     try:
         chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))
@@ -63,7 +63,7 @@ def getChatroom(chatroom_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
     
-@chatRoom.route("/<user_id>/user-get")
+@chatRoom.route("/user-get/<user_id>")
 def getUserChatrooms(user_id):
     try:
         chatroom_data = GetChatroomWithUserAction.userInChatroom(str(user_id))
@@ -72,7 +72,7 @@ def getUserChatrooms(user_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
 
-@chatRoom.route("/<chatroom_id>/get-messages")
+@chatRoom.route("/get-messages/<chatroom_id>")
 def getChatroomMessages(chatroom_id):
     try:
         chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))

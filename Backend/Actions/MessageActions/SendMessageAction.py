@@ -1,17 +1,17 @@
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 from Model.Message import Message
 from firebase_admin import firestore
 from WebSocket.Extensions import socketio, emit, join_room, leave_room
 
 def SendMessage(chatroom_id, message, senderId):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
 
     print("Hit")
     
     #check if the chatroom id exist
     chatroom_ref = db.child("Chatrooms").child(chatroom_id).get()
     if chatroom_ref is None:
-        FireStore.closeConnection()
+        FireBaseDatabase.closeConnection()
         raise Exception("There is no chatroom with that id")
     
     #create the message object
@@ -21,4 +21,4 @@ def SendMessage(chatroom_id, message, senderId):
     print(chatroom_id)
     socketio.emit("new_message", message.toDict(), room=chatroom_id)
 
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()

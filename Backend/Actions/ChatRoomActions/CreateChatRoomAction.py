@@ -1,9 +1,9 @@
 from Model.Chatroom import Chatroom
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 from Actions.MessageActions import SendMessageAction
 
 def craeteChatroom(data):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
     participants = data["Participants"]
     admin = Querys.getById(db, "Profiles", data["Admin"])
     initial_message = "Be the first to type"
@@ -29,7 +29,7 @@ def craeteChatroom(data):
     chatroom_participants_ref = db.child('Chatroom Participants')
     chatroom_participants_ref.child(chatroom_ref_id).set(participants_objects)
 
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()
 
     #Create the message and send a static message
     SendMessageAction.SendMessage(chatroom_ref_id, initial_message, data["Admin"])

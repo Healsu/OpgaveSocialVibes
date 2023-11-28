@@ -1,10 +1,10 @@
-from Database import FireStore
+from Database import FireBaseDatabase
 from Model.Profile import Profile
 
 def saveProfile(data):
     collectionName = 'Profiles'
 
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
 
     #create Model to reinforce layout of the object in the database:
     profile = Profile(data["Name"])
@@ -16,4 +16,4 @@ def saveProfile(data):
 
     print(f"Added data with key: {new_data_ref.key}")
 
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()

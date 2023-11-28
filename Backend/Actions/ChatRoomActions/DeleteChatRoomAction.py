@@ -1,8 +1,8 @@
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 from google.cloud.exceptions import NotFound
 
 def deleteChatroom(chatroom_id):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
     
     chatroom_ref = db.child("Chatrooms").child(chatroom_id)
     
@@ -35,4 +35,4 @@ def deleteChatroom(chatroom_id):
     if not is_deleted:
         raise ValueError("No deletion operation was performed. Chatroom not found.")
     
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()

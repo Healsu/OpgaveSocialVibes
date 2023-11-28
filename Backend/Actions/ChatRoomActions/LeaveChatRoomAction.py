@@ -1,7 +1,7 @@
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 
 def leave(chatroom_id, user_id):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
     
     chatroom_participants_ref = db.child(f"Chatroom Participants/{chatroom_id}")
 
@@ -16,4 +16,4 @@ def leave(chatroom_id, user_id):
 
 
 
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()

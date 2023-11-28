@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 import firebase_admin
-from firebase_admin import credentials, firestore, db
+from firebase_admin import credentials, db
 load_dotenv()
 
 app = None

@@ -4,7 +4,7 @@ from Actions.MessageActions import SendMessageAction, DeleteMessageAction
 message = Blueprint('message', __name__)
 
 
-@message.route("/<chatroom_id>/send-message", methods=["POST"])
+@message.route("/send-message/<chatroom_id>", methods=["POST"])
 def sendMessage(chatroom_id):
     try:
         message = request.get_json().get("message")
@@ -17,7 +17,7 @@ def sendMessage(chatroom_id):
         return jsonify({'error': 'Message could not be sent'}), 500
 
 
-@message.route("/<chatroom_id>/delete-message", methods=["DELETE"])
+@message.route("/delete-message/<chatroom_id>", methods=["DELETE"])
 def deleteMessage(chatroom_id):
     try:
         #get the chatroom id

@@ -1,10 +1,10 @@
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 from Model.Profile import Profile
 
 def getProfile(user_id):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
     
     profile_data = Querys.getById(db, "Profiles", user_id)
     
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()
     return profile_data

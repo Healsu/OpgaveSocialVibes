@@ -1,8 +1,8 @@
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 from google.cloud import firestore
 
 def addUser(chatroom_id, user_id):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
     
     chatroom_participants_ref = db.child(f"Chatroom Participants/{chatroom_id}")
 
@@ -12,11 +12,11 @@ def addUser(chatroom_id, user_id):
     if user_profile not in participants_data:
         participants_data.append(user_profile)
     else:
-        FireStore.closeConnection()
+        FireBaseDatabase.closeConnection()
         raise Exception("That user is already in the chatroom")
     chatroom_participants_ref.set(participants_data)
 
-    FireStore.closeConnection()
+    FireBaseDatabase.closeConnection()
 
         
 

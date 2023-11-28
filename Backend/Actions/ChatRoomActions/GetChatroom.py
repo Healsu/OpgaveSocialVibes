@@ -1,8 +1,8 @@
-from Database import FireStore, Querys
+from Database import FireBaseDatabase, Querys
 
 
 def getDataAndMessages(chatroom_id):
-    db = FireStore.getConnection()
+    db = FireBaseDatabase.getConnection()
     chatroom_ref = db.child(f"Chatrooms/{chatroom_id}")
     chatroom_participants_ref = db.child(f"Chatroom Participants/{chatroom_id}") 
     chatroom_messages_ref = db.child(f"Chatroom Messages/{chatroom_id}")
@@ -17,6 +17,6 @@ def getDataAndMessages(chatroom_id):
     except Exception as e:
         print(f"There is no chatroom {e}")
     finally:
-        FireStore.closeConnection()
+        FireBaseDatabase.closeConnection()
     
     

@@ -16,7 +16,7 @@ def create():
         return jsonify({'error': 'Failed to create a profile'}), 500
 
 
-@profile.route("/<user_id>/get")
+@profile.route("/get/<user_id>")
 def getProfile(user_id):
     try:
         profile_data =  GetProfileDataAction.getProfile(str(user_id))
@@ -27,7 +27,7 @@ def getProfile(user_id):
         return jsonify({'error': 'No profile with that id found'}), 500
 
 
-@profile.route("<user_id>/get-friends")
+@profile.route("/get-friends/<user_id>")
 def getFriends(user_id):
     try:
         friend_list =  GetFriendsListAction.getFriends(str(user_id))
@@ -37,7 +37,7 @@ def getFriends(user_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'That profile has no friends'}), 500
     
-@profile.route("/<start_number>/pagination-get")
+@profile.route("/pagination-get/<start_number>")
 def getPaginatedProfiles(start_number):
     try:
         profiles = GetPaginatedProfilesAction.GetFromIndex(start_number)
