@@ -1,6 +1,6 @@
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, send_file
 from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction, GetChatroom, GetChatroomWithUserAction
-
+import json
 chatRoom = Blueprint('chatRoom', __name__)
 
 
@@ -76,7 +76,8 @@ def getUserChatrooms(user_id):
 def getChatroomMessages(chatroom_id):
     try:
         chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))
-        return jsonify({'message': 'Chatroom retrieved', 'chatroom_messages': chatroom_data["Messages"]}), 200
+
+        return jsonify({'message': 'Chatroom Messages retrieved', 'messages': chatroom_data}), 200
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500

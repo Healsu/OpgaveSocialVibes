@@ -7,9 +7,10 @@ message = Blueprint('message', __name__)
 @message.route("/send-message/<chatroom_id>", methods=["POST"])
 def sendMessage(chatroom_id):
     try:
-        message = request.get_json().get("message")
-        senderId = request.get_json().get("senderID")
-        SendMessageAction.SendMessage(chatroom_id, message, senderId)
+        message = request.form.get("message")
+        senderId = request.form.get("senderID")
+        message_image = request.files.get("image")
+        SendMessageAction.SendMessage(chatroom_id, message, senderId, message_image)
 
         return jsonify({'message': 'Message sent'}), 200
     except Exception as e:

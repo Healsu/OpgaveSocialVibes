@@ -10,7 +10,7 @@ app = None
 def getConnection():
     global app
     cred = credentials.Certificate(os.getenv('DB_CRED'))
-    firebase_admin.initialize_app(cred, { 'storageBucket' : 'social-vibes-4d1d6.appspot.com' })
+    app = firebase_admin.initialize_app(cred, { 'storageBucket' : 'social-vibes-4d1d6.appspot.com' })
     bucket = storage.bucket(app=app)
     return bucket
 

@@ -1,12 +1,13 @@
 from Model.Chatroom import Chatroom
 from Database import FireBaseDatabase, Querys
 from Actions.MessageActions import SendMessageAction
+from Model.Message import Message
 
 def craeteChatroom(data):
     db = FireBaseDatabase.getConnection()
     participants = data["Participants"]
     admin = Querys.getById(db, "Profiles", data["Admin"])
-    initial_message = "Be the first to type"
+    initial_message = Message("Be the first to type", "System")
 
     #craete the data
     chatroom = Chatroom(admin, data["Title"], initial_message)
