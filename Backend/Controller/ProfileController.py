@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.ProfileActions import CreateProfileAction, GetProfileDataAction, GetFriendsListAction, GetPaginatedProfilesAction
+from Actions.ProfileActions import CreateProfileAction, GetProfileDataAction, GetFriendsListAction, GetPaginatedProfilesAction, GetAllProfiles
 
 profile = Blueprint('profile', __name__)#blueprint is mini flask applications that is driven by the main application
 
@@ -41,6 +41,16 @@ def getFriends(user_id):
 def getPaginatedProfiles(start_number):
     try:
         profiles = GetPaginatedProfilesAction.GetFromIndex(start_number)
+
+        return jsonify({'message': 'Profile friends Retrieved', 'profiles': profiles}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'That profile has no friends'}), 500
+
+@profile.route("/get-all-profiles")
+def getAllProfiles():
+    try:
+        profiles = GetAllProfiles.get()
 
         return jsonify({'message': 'Profile friends Retrieved', 'profiles': profiles}), 200
     except Exception as e:
