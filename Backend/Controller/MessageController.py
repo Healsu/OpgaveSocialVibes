@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.MessageActions import SendMessageAction, DeleteMessageAction
+from Actions.MessageActions import SendMessageAction, DeleteMessageAction, RemoveReactionAction, AddReactionAction
 
 message = Blueprint('message', __name__)
 
@@ -29,3 +29,30 @@ def deleteMessage(chatroom_id):
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'Message could not be deleted'}), 500
+
+
+@message.route("/add-reaction/<chatroom_id>", methods=["POST"])
+def addReaction(chatroom_id):
+    try:
+        message_id = request.get_json().get("message_id")
+        reaction = request.get_json().get("reaction")
+
+        AddReactionAction.add(chatroom_id, message_id, reaction)
+
+        return jsonify({'message': 'Reaction Added'}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'Reaction could not be added'}), 500
+    
+@message.route("/remove-reaction/<chatroom_id>", methods=["POST"])
+def removeReaction(chatroom_id):
+    try:
+        message_id = request.get_json().get("message_id")
+        reaction = request.get_json().get("reaction")
+
+        RemoveReactionAction.remove(chatroom_id, message_id, reaction)
+
+        return jsonify({'message': 'Reaction Added'}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'Reaction could not be added'}), 500

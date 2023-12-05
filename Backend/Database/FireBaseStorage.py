@@ -6,12 +6,14 @@ import firebase_admin
 load_dotenv()
 
 app = None
+bucket = None
 
 def getConnection():
-    global app
-    cred = credentials.Certificate(os.getenv('DB_CRED'))
-    app = firebase_admin.initialize_app(cred, { 'storageBucket' : 'social-vibes-4d1d6.appspot.com' })
-    bucket = storage.bucket(app=app)
+    global app, bucket
+    if app is None:
+        cred = credentials.Certificate(os.getenv('DB_CRED'))
+        app = firebase_admin.initialize_app(cred, { 'storageBucket' : 'social-vibes-4d1d6.appspot.com' })
+        bucket = storage.bucket(app=app)
     return bucket
 
 def closeConnection():
