@@ -34,10 +34,11 @@ def deleteMessage(chatroom_id):
 @message.route("/add-reaction/<chatroom_id>", methods=["POST"])
 def addReaction(chatroom_id):
     try:
+        user_id = request.get_json().get("user_id")
         message_id = request.get_json().get("message_id")
         reaction = request.get_json().get("reaction")
 
-        AddReactionAction.add(chatroom_id, message_id, reaction)
+        AddReactionAction.add(chatroom_id, message_id, reaction, user_id)
 
         return jsonify({'message': 'Reaction Added'}), 200
     except Exception as e:
@@ -47,10 +48,11 @@ def addReaction(chatroom_id):
 @message.route("/remove-reaction/<chatroom_id>", methods=["POST"])
 def removeReaction(chatroom_id):
     try:
+        user_id = request.get_json().get("user_id")
         message_id = request.get_json().get("message_id")
         reaction = request.get_json().get("reaction")
 
-        RemoveReactionAction.remove(chatroom_id, message_id, reaction)
+        RemoveReactionAction.remove(chatroom_id, message_id, reaction, user_id)
 
         return jsonify({'message': 'Reaction Added'}), 200
     except Exception as e:
