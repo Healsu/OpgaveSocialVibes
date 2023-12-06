@@ -14,7 +14,7 @@ class Message:
         data = {
             'Message': self.message,
             'ImageURL': self.image_url,
-            'SenderId': self.senderId,
+            'Sender': self.senderId,
             'isSeen': self.isSeen,
             'TimeStamp': self.timeStamp,
             'Reactions': self.reactions

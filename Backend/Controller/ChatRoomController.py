@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint, send_file
-from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction, GetChatroom, GetChatroomWithUserAction
+from Actions.ChatRoomActions import CreateChatRoomAction, DeleteChatRoomAction, AddUserToChatroomAction, LeaveChatRoomAction, GetChatroomMessages, GetChatroomWithUserAction, GetChatroom
 import json
 chatRoom = Blueprint('chatRoom', __name__)
 
@@ -51,17 +51,6 @@ def removeUserFromChatroom(chatroom_id):
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'User could not leave the chatroom'}), 500
-
-
-@chatRoom.route("/get/<chatroom_id>")
-def getChatroom(chatroom_id):
-    try:
-        chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))
-
-        return jsonify({'message': 'Chatroom retrieved', 'chatroom_data': chatroom_data}), 200
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return jsonify({'error': 'There is no chatroom with that id'}), 500
     
 @chatRoom.route("/user-get/<user_id>")
 def getUserChatrooms(user_id):
@@ -72,10 +61,20 @@ def getUserChatrooms(user_id):
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
 
+@chatRoom.route("/get/<chatroom_id>")
+def getChatroom(chatroom_id):
+    try:
+        chatroom_data = GetChatroom.getData(str(chatroom_id))
+        print(chatroom_data)
+        return jsonify({'message': 'Chatroom retrieved', 'chatroom_data': chatroom_data}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'There is no chatroom with that id'}), 500
+    
 @chatRoom.route("/get-messages/<chatroom_id>")
 def getChatroomMessages(chatroom_id):
     try:
-        chatroom_data = GetChatroom.getDataAndMessages(str(chatroom_id))
+        chatroom_data = GetChatroomMessages.getMessages(str(chatroom_id))
 
         return jsonify({'message': 'Chatroom Messages retrieved', 'messages': chatroom_data}), 200
     except Exception as e:
