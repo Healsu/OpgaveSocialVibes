@@ -7,9 +7,10 @@ load_dotenv()
 app = None
 
 def getConnection():
-    cred = credentials.Certificate(os.getenv('DB_CRED'))
     global app
-    app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://social-vibes-4d1d6-default-rtdb.europe-west1.firebasedatabase.app//'})
+    if app is None:
+        cred = credentials.Certificate(os.getenv('DB_CRED'))
+        app = firebase_admin.initialize_app(cred, {'databaseURL': 'https://social-vibes-4d1d6-default-rtdb.europe-west1.firebasedatabase.app//'})
     return db.reference()
 
 def closeConnection():
