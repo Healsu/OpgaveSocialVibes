@@ -16,7 +16,7 @@ def userInChatroom(user_id):
                         'Type': chatroom_data.get("Type", None)
                     }
 
-                    chatroom_objects.append(f"{chatroom[0]}: {data}")#append the chatroom to the return array     
+                    chatroom_objects.append({f"{chatroom[0]}": f"{data}"})#append the chatroom to the return array
         FireBaseDatabase.closeConnection()
         return chatroom_objects
     except:
