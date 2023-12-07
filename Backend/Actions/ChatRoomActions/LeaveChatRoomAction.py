@@ -14,6 +14,6 @@ def leave(chatroom_id, user_id):
         raise Exception("That user is already in the chatroom")
     chatroom_participants_ref.set(participants_data)
 
-
+    db.child("Chatrooms").child(chatroom_id).update({"Type": 'Group Chat' if len(participants_data) > 2 else 'Individual Chat'})
 
     FireBaseDatabase.closeConnection()

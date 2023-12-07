@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 import uuid
 import os
 
-def SendMessage(chatroom_id, message, senderId, message_image):
+def SendMessage(chatroom_id, message, senderId, message_image=None):
     unique_filename = None
     message_image_url = None
     if message_image != None:

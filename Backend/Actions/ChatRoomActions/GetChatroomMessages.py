@@ -1,5 +1,4 @@
 from Database import FireBaseDatabase, FireBaseStorage
-import matplotlib.pyplot as plt
 import base64
 import zlib
 

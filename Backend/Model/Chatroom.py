@@ -22,5 +22,5 @@ class Chatroom:
             
         return data
     
-    def setType(self, count):
-        self.type = 'Group Chat' if len(count) > 2 else 'Individual Chat'
+    def setType(self, group):
+        self.type = 'Group Chat' if len(group) > 2 else 'Individual Chat'

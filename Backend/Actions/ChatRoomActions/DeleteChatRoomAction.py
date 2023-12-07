@@ -24,14 +24,14 @@ def deleteChatroom(chatroom_id):
     else:
         print("There is no chatroom Participants by that id")
     
-    chatroom_messeges_ref = db.child("Chatrooms Messages").child(chatroom_id)
-    
+    chatroom_messeges_ref = db.child("Chatroom Messages").child(chatroom_id)
+    print(chatroom_messeges_ref.get())
     if chatroom_messeges_ref.get():
         chatroom_messeges_ref.delete()
         is_deleted = True
     else:
         print("There is no chatroom Messages by that id")
-    
+
     if not is_deleted:
         raise ValueError("No deletion operation was performed. Chatroom not found.")
     

@@ -10,7 +10,8 @@ def craeteChatroom(data):
     initial_message = Message("Be the first to type", "System")
 
     #craete the data
-    chatroom = Chatroom(admin, data["Title"], initial_message)
+    chatroom = Chatroom(admin, data["Title"], initial_message.toDict())
+    chatroom.setType(participants)
     participants_objects = []
     messages = []
 
@@ -33,7 +34,7 @@ def craeteChatroom(data):
     FireBaseDatabase.closeConnection()
 
     #Create the message and send a static message
-    SendMessageAction.SendMessage(chatroom_ref_id, initial_message, data["Admin"])
+    SendMessageAction.SendMessage(chatroom_ref_id, initial_message.toDict(), data["Admin"])
 
     
     #try catch
