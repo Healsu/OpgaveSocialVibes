@@ -26,6 +26,7 @@ def getMessages(chatroom_id):
             message_key = key
             image_url = value.get('ImageURL', 'N/A')
             message = value.get('Message')
+            ractions = value.get('Reactions')
             sender_id = value.get('SenderId')
             time_stamp = value.get('TimeStamp')
             is_seen = value.get('isSeen')
@@ -42,6 +43,7 @@ def getMessages(chatroom_id):
 
                     messages[message_key] ={"Image": base64_image,
                                             "Message": message,
+                                            "Reactions": ractions,
                                             "SenderId": sender_id,
                                             "TimeStamp": time_stamp,
                                             "isSeen": is_seen}
@@ -56,6 +58,7 @@ def getMessages(chatroom_id):
                 # For messages without pictures
                 messages[message_key] ={"Image": "N/A",
                                         "Message": message,
+                                        "Reactions": ractions,
                                         "SenderId": sender_id,
                                         "TimeStamp": time_stamp,
                                         "isSeen": is_seen}

@@ -17,9 +17,3 @@ def addUser(chatroom_id, user_id):
     chatroom_participants_ref.set(participants_data)
 
     FireBaseDatabase.closeConnection()
-
-        
-
-    
-
-    

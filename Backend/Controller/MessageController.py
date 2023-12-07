@@ -10,7 +10,7 @@ def sendMessage(chatroom_id):
         message = request.form.get("message")
         senderId = request.form.get("senderID")
         message_image = request.files.get("image", None)
-        print(message, senderId, message_image)
+
         SendMessageAction.SendMessage(chatroom_id, message, senderId, message_image)
 
         return jsonify({'message': 'Message sent'}), 200
