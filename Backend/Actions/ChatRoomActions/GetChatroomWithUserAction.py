@@ -10,6 +10,7 @@ def userInChatroom(user_id):
                 if(profile["id"] == user_id):#sort for user id in the chatroom
                     chatroom_data = db.child("Chatrooms").child(chatroom[0]).get()
                     data = {
+                        'ChatroomID': chatroom[0],
                         'LastMessage': chatroom_data.get("Last Message", None),
                         'TimeStamp': chatroom_data.get("TimeStamp", None),
                         'Title': chatroom_data.get("Title", None),
