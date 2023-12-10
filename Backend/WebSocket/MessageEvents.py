@@ -1,21 +1,24 @@
 from .Extensions import socketio, emit, join_room, leave_room
-from Actions.ChatRoomActions import GetChatroom
-
-@socketio.on("message")
-def handle_connect(message):
-    emit("message", message, broadcast=True)
-
+from Actions.ChatRoomActions import GetChatroomMessages
 
 @socketio.on('chatroom_join')
 def handle_chatroom(data):
-    print("User joined the chatroom")
+    print("User Opened the chatroom")
 
     chatroom_id = data['chatroom_id']
 
     join_room(chatroom_id)
-    print(chatroom_id)
-    user_data = GetChatroom.getDataAndMessages(chatroom_id)
-    
-    emit('message_list', user_data['Messages'], broadcast=True)
+    user_data = GetChatroomMessages.getMessages(chatroom_id)
+    messages = []
+    for key in user_data:
+        messages.append(user_data[key])
+        
+    emit('message_list', messages, broadcast=True, room=chatroom_id)
 
-    # Perform any other actions based on the received data
+@socketio.on('chatroom_leave')
+def handle_leave_chatroom(data):
+    print("User Closed the chatroom")
+
+    chatroom_id = data['chatroom_id']
+    
+    leave_room(chatroom_id)
