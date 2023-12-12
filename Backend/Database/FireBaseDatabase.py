@@ -15,5 +15,6 @@ def getConnection():
 
 def closeConnection():
     global app
-    firebase_admin.delete_app(app)
+    if app is not None:
+        firebase_admin.delete_app(app)
     app = None

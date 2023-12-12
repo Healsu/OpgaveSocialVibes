@@ -34,7 +34,7 @@ def craeteChatroom(data):
     FireBaseDatabase.closeConnection()
 
     #Create the message and send a static message
-    SendMessageAction.SendMessage(chatroom_ref_id, initial_message.toDict(), data["Admin"])
+    SendMessageAction.SendMessage(chatroom_ref_id, initial_message.message, "System")
 
     
     #try catch

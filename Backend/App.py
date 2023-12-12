@@ -3,6 +3,7 @@ from Controller.ProfileController import profile
 from Controller.ChatRoomController import chatRoom
 from Controller.MessageController import message
 from WebSocket.MessageEvents import socketio
+from Controller.CommunityController import community
 from flask_cors import CORS
 
 def create_app():
@@ -16,7 +17,7 @@ def create_app():
     app.register_blueprint(profile, url_prefix='/profile')
     app.register_blueprint(chatRoom, url_prefix='/chatroom')
     app.register_blueprint(message, url_prefix='/message')
-
+    app.register_blueprint(community, url_prefix="/community")
 
     socketio.init_app(app)
 
