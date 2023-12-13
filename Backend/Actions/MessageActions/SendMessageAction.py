@@ -7,6 +7,7 @@ import uuid
 import os
 
 def SendMessage(chatroom_id, message, senderId, message_image=None):
+    
     unique_filename = None
     message_image_url = None
     if message_image != None:
@@ -24,24 +25,31 @@ def SendMessage(chatroom_id, message, senderId, message_image=None):
 
         FireBaseStorage.closeConnection()
     #-------------------------------------------------------------------------------------
-
+    
     db = FireBaseDatabase.getConnection()
     
-    senderObject = Querys.getById(db,"Profiles", senderId)
+    senderObject = Querys.getById(db, "Profiles", senderId)
+    print(senderObject)
     #check if the chatroom id exist
+    print(chatroom_id)
+    print(message)
+    print(senderId)
+    print(message_image)
     chatroom_ref = db.child("Chatrooms").child(chatroom_id).get()
+    
     if chatroom_ref is None:
         FireBaseDatabase.closeConnection()
         raise Exception("There is no chatroom with that id")
     
     #create the message object
     message = Message(message, senderObject, unique_filename)
-
+    
     chatroom_messages_ref = db.child("Chatroom Messages").child(chatroom_id).push(message.toDict())
-    print(chatroom_id)
+
     socketio.emit("new_message", message.toDict(), room=chatroom_id)
 
     #Update latest message in chatroom
-    chatroom_ref = db.child(f"Chatrooms/{chatroom_id}").update({"Last Message":message.toDict()})
+
+    chatroom_ref = db.child(f"Chatrooms/{chatroom_id}").update({"Latest Message":message.toDict()})
 
     FireBaseDatabase.closeConnection()

@@ -13,7 +13,7 @@ class Chatroom:
         data = {
             'Title': self.title,
             'Admin': self.admin,
-            'LatestMessage': self.LatestMessage,
+            'Latest Message': self.LatestMessage,
             'TimeStamp': self.timeTable
         }
 

@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint, send_file
-from Actions.CommunityActions import CreateCommunityAction, VerifyIsCommunityChatroomAction
+from Actions.CommunityActions import CreateCommunityAction, VerifyIsCommunityChatroomAction, GetCommunityWhitoutUserAction
 from Actions.ChatRoomActions import AddUserToChatroomAction, LeaveChatRoomAction
 
 community = Blueprint('community', __name__)
@@ -50,3 +50,14 @@ def leave(chatroom_id):
         return jsonify({'message': 'Community quit successfully'}), 200
     except Exception as e:
         return jsonify({'message': f'Community quit failed: {e}'}), 500
+
+
+@community.route("get-all-communitys/<user_id>")
+def get(user_id):
+    try:
+
+        data = GetCommunityWhitoutUserAction.get(user_id)
+
+        return jsonify({'message': 'Community retrieved successfully', "Chatrooms": data}), 200
+    except Exception as e:
+        return jsonify({'message': f'Community retrieved failed: {e}'}), 500

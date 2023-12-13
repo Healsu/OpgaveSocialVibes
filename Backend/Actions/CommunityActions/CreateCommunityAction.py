@@ -24,6 +24,8 @@ def createCommunity(data):
     chatroom_participants_ref = db.child('Chatroom Participants')
     chatroom_participants_ref.child(chatroom_ref_id).set([admin])
 
-    SendMessageAction.SendMessage(chatroom_ref_id, initial_message.message, "system")
-
     FireBaseDatabase.closeConnection()
+
+    SendMessageAction.SendMessage(chatroom_ref_id, initial_message.message, "System")
+
+    
