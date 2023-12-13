@@ -17,7 +17,7 @@ def get(user_id):
     for key, value in query_result.items():
         participants_list = db.child("Chatroom Participants").child(key).get()
 
-        if( user_object in participants_list):
+        if( user_object not in participants_list):
             chatroom_keys[key] = value
     
     return chatroom_keys
