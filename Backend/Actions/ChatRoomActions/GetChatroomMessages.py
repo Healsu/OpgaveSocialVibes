@@ -26,7 +26,7 @@ def getMessages(chatroom_id):
             image_url = value.get('ImageURL', 'N/A')
             message = value.get('Message')
             ractions = value.get('Reactions')
-            sender_id = value.get('SenderId')
+            sender_id = value.get('Sender')
             time_stamp = value.get('TimeStamp')
             is_seen = value.get('isSeen')
 
@@ -43,7 +43,7 @@ def getMessages(chatroom_id):
                     messages[message_key] ={"Image": base64_image,
                                             "Message": message,
                                             "Reactions": ractions,
-                                            "SenderId": sender_id,
+                                            "Sender": sender_id,
                                             "TimeStamp": time_stamp,
                                             "isSeen": is_seen}
                     #testing to see if the image is found------------------------
@@ -58,7 +58,7 @@ def getMessages(chatroom_id):
                 messages[message_key] ={"Image": "N/A",
                                         "Message": message,
                                         "Reactions": ractions,
-                                        "SenderId": sender_id,
+                                        "Sender": sender_id,
                                         "TimeStamp": time_stamp,
                                         "isSeen": is_seen}
 
