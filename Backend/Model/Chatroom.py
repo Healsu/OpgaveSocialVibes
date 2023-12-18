@@ -13,7 +13,7 @@ class Chatroom:
         data = {
             'Title': self.title,
             'Admin': self.admin,
-            'LatestMessage': self.LatestMessage,
+            'Latest Message': self.LatestMessage,
             'TimeStamp': self.timeTable
         }
 
@@ -24,3 +24,6 @@ class Chatroom:
     
     def setType(self, group):
         self.type = 'Group Chat' if len(group) > 2 else 'Individual Chat'
+    
+    def setTypeCommunity(self):
+        self.type = 'Community'

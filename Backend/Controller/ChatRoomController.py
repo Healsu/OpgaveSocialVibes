@@ -81,4 +81,6 @@ def getChatroomMessages(chatroom_id):
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'There is no chatroom with that id'}), 500
-#Add delete chat messages to delete chatroom
+
+
+#VERIFY ALL API's THAT THEY ARE AN TYPE OF CHATROOM LIKE WE DO IN COMMUNITY.
