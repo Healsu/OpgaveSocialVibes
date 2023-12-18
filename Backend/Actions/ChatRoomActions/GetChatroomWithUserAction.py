@@ -5,9 +5,9 @@ def userInChatroom(user_id):
         db = FireBaseDatabase.getConnection()
         chatrooms = db.child("Chatroom Participants").get().items()
         chatroom_objects = {}
-        for chatroom in chatrooms:#sort the chatrooms
-            for profile in chatroom[1]:#sort out profiles from the chatroom
-                if(profile["id"] == user_id):#sort for user id in the chatroom
+        for chatroom in chatrooms:
+            for profile in chatroom[1]:
+                if(profile["id"] == user_id):
                     chatroom_data = db.child("Chatrooms").child(chatroom[0]).get()
                     data = {
                         'ChatroomID': chatroom[0],
@@ -17,7 +17,7 @@ def userInChatroom(user_id):
                         'Type': chatroom_data.get("Type", None)
                     }
 
-                    chatroom_objects[chatroom[0]] = data #append the chatroom to the return array
+                    chatroom_objects[chatroom[0]] = data 
         FireBaseDatabase.closeConnection()
         return chatroom_objects
     except:

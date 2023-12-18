@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint, send_file
-from Actions.CommunityActions import CreateCommunityAction, VerifyIsCommunityChatroomAction, GetCommunityWhitoutUserAction
+from Actions.CommunityActions import CreateCommunityAction, VerifyIsCommunityChatroomAction, GetCommunityWhitoutUserAction, BanUserFromCommunityAction
 from Actions.ChatRoomActions import AddUserToChatroomAction, LeaveChatRoomAction
 
 community = Blueprint('community', __name__)
@@ -61,3 +61,16 @@ def get(user_id):
         return jsonify({'message': 'Community retrieved successfully', "Chatrooms": data}), 200
     except Exception as e:
         return jsonify({'message': f'Community retrieved failed: {e}'}), 500
+
+
+@community.route("Ban-user/<Community_id>", methods=["POST"])
+def ban(Community_id):
+    isCommunity = VerifyIsCommunityChatroomAction.IsCommunity(Community_id)
+    user_id = request.get_json().get("user_Id")
+
+    if(isCommunity is False):
+        raise Exception("This is not an community")
+    
+    
+
+    BanUserFromCommunityAction.ban()
