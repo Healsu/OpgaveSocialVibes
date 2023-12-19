@@ -17,5 +17,7 @@ def getById(db, CollectionName, id):
 
     if data is None:
         raise Exception(f"There is no existing entity with that id: {id}")
+    
+    data["id"] = id
 
     return data
