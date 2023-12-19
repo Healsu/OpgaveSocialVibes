@@ -11,7 +11,8 @@ def Get(event_ID):
         "Latitude": float(event_object.get("Latitude")),
         "Longitude": float(event_object.get("Longitude")),
         "TimeStamp": event_object.get("TimeStamp"),
-        "Title": event_object.get("Title")
+        "Title": event_object.get("Title"),
+        "Description": event_object.get("Description")
     }
     FireBaseDatabase.closeConnection()
     return { "Event": events_ref_data, "Event Participants": event_participants_object }
@@ -30,7 +31,8 @@ def GetAll():
             "Latitude": float(event_data.get("Latitude")),
             "Longitude": float(event_data.get("Longitude")),
             "TimeStamp": event_data.get("TimeStamp"),
-            "Title": event_data.get("Title")
+            "Title": event_data.get("Title"),
+            "Description": event_data.get("Description")
         }
         events_ref_data[event_id] = data
 

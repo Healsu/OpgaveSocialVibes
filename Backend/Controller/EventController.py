@@ -37,3 +37,7 @@ def GetAll():
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'message': 'Events retrieved failed'}), 500
+    
+@event.route("/join/<Event_Id>", methods=["POST"])
+def join(Event_Id):
+    pass

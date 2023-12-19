@@ -4,10 +4,12 @@ def userInChatroom(user_id):
     try:
         db = FireBaseDatabase.getConnection()
         chatrooms = db.child("Chatroom Participants").get().items()
+        user_object = Querys.getById(db, "Profiles", user_id)
+        print("Match This: ", user_object)
         chatroom_objects = {}
         for chatroom in chatrooms:
             for profile in chatroom[1]:
-                if(profile["id"] == user_id):
+                if(profile == user_object):
                     chatroom_data = db.child("Chatrooms").child(chatroom[0]).get()
                     data = {
                         'ChatroomID': chatroom[0],
