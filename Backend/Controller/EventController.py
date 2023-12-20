@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.EventActions import CreateEventAction, GetEventAction
+from Actions.EventActions import CreateEventAction, GetEventAction, JoinEventAction, LeaveEventAction
 
 event = Blueprint('event', __name__)
 
@@ -19,7 +19,6 @@ def Create():
 @event.route("/get/<Event_Id>")
 def Get(Event_Id):
     try:
-
         data = GetEventAction.Get(str(Event_Id))
 
         return jsonify({"message": "Event retrieved", "Data": data}), 200
@@ -30,7 +29,6 @@ def Get(Event_Id):
 @event.route("/get-all")
 def GetAll():
     try:
-
         data = GetEventAction.GetAll()
 
         return jsonify({"message": "Events retrieved", "Data": data}), 200
@@ -38,6 +36,26 @@ def GetAll():
         print(f"An error occurred: {e}")
         return jsonify({'message': 'Events retrieved failed'}), 500
     
-@event.route("/join/<Event_Id>", methods=["POST"])
+@event.route("/join/<Event_Id>", methods=["PATCH"])
 def join(Event_Id):
-    pass
+    try:
+        user_id = request.get_json().get("user_Id")
+
+        JoinEventAction.join(str(Event_Id), str(user_id))
+
+        return jsonify({"message": "Event joined"}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': f'Event join failed: {e}'}), 500
+    
+@event.route("/leave/<Event_Id>", methods=["PATCH"])
+def leave(Event_Id):
+    try:
+        user_id = request.get_json().get("user_Id")
+
+        LeaveEventAction.leave(str(Event_Id), str(user_id))
+
+        return jsonify({'message': 'User left the Event'}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'error': 'User could not leave the Event'}), 500
