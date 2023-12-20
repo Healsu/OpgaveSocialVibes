@@ -9,10 +9,11 @@ def create(data):
     description = data["Description"]
     start_date = data["StartDate"]
     stop_date = data["StopDate"]
-    adress = data.get("adress", "N/A")
-    admin_object = Querys.getById( db, "Profiles", data["Admin"] )
+    adress = data["adress"]
+    admin_object = Querys.getById( db, "Profiles", data["Admin"])
     participants_list = [admin_object]
-    event_object = Event(lat, lng, admin_object, title, description)
+
+    event_object = Event(lat, lng, admin_object, title, description, start_date, stop_date, adress)
 
     #create objects in json database
     event_ref = db.child('Events')
