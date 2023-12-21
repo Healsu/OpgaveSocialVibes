@@ -9,6 +9,8 @@ def create(data):
     description = data["Description"]
     start_date = data["StartDate"]
     stop_date = data["StopDate"]
+    start_time = data["StartTime"]
+    stop_time = data["StopTime"]
     adress = data["adress"]
     admin_object = Querys.getById( db, "Profiles", data["Admin"])
     participants_list = [admin_object]

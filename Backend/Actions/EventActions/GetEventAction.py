@@ -14,7 +14,9 @@ def Get(event_ID):
         "Title": event_object.get("Title"),
         "Description": event_object.get("Description"),
         'StartDate': event_object.get("StartDate"),
+        'StartTime': event_object.get("StartTime"),
         'StopDate': event_object.get("StopDate"),
+        'StopTime': event_object.get("StopTime"),
         'Adress': event_object.get("Adress")
     }
     FireBaseDatabase.closeConnection()
@@ -24,22 +26,15 @@ def GetAll():
     db = FireBaseDatabase.getConnection()
     events_ref_data = {}
     events_ref = db.child("Events").get()
-
-    events_participants_ref = db.child("Event Participants").get()
     
     FireBaseDatabase.closeConnection()
     for event_id, event_data in events_ref.items():
         data = {
-            "Admin": event_data.get("Admin"),
+            "Id": event_id,
             "Latitude": float(event_data.get("Latitude")),
             "Longitude": float(event_data.get("Longitude")),
-            "TimeStamp": event_data.get("TimeStamp"),
             "Title": event_data.get("Title"),
-            "Description": event_data.get("Description"),
-            'StartDate': event_data.get("StartDate"),
-            'StopDate': event_data.get("StopDate"),
-            'Adress': event_data.get("Adress")
         }
         events_ref_data[event_id] = data
 
-    return { "Event":events_ref_data, "Event Participants": events_participants_ref}
+    return { "Event":events_ref_data}
