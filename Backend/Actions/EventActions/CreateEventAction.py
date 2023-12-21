@@ -15,7 +15,7 @@ def create(data):
     admin_object = Querys.getById( db, "Profiles", data["Admin"])
     participants_list = [admin_object]
 
-    event_object = Event(lat, lng, admin_object, title, description, start_date, stop_date, adress)
+    event_object = Event(lat, lng, admin_object, title, description, start_date, stop_date, adress, start_time, stop_time)
 
     #create objects in json database
     event_ref = db.child('Events')
