@@ -35,6 +35,6 @@ def craeteChatroom(data):
 
     #Create the message and send a static message
     SendMessageAction.SendMessage(chatroom_ref_id, initial_message.message, "System")
-
-    return chatroom_ref_id
+    
+    return chatroom_ref_id, chatroom.getType()
     #try catch

@@ -27,3 +27,6 @@ class Chatroom:
     
     def setTypeCommunity(self):
         self.type = 'Community'
+    
+    def getType(self):
+        return self.type
