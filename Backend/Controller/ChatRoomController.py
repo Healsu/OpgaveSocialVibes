@@ -9,8 +9,8 @@ def createChatroom():
     try:
         request_body = request.get_json()
 
-        CreateChatRoomAction.craeteChatroom(request_body)
-        return jsonify({'message': 'Chatroom created successfully', 'data': request_body}), 200
+        chatRoomID = CreateChatRoomAction.craeteChatroom(request_body)
+        return jsonify({'message': 'Chatroom created successfully', 'data': chatRoomID}), 200
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'message': 'Chatroom creation failed', 'data': request_body}), 500

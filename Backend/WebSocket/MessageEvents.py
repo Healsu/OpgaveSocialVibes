@@ -10,9 +10,6 @@ def handle_chatroom(data):
     chatroom_id = data['chatroom_id']
     user_id = data.get('user_id', None)
 
-    #check if the chatroom is a community and then if the user is banned
-
-
     join_room(chatroom_id, user_id)
     user_data = GetChatroomMessages.getMessages(chatroom_id)
     messages = []
@@ -42,8 +39,6 @@ def handle_banned_user(data):
         emit("Banned_Fail", False, broadcast=True, room=chatroom_id)#emit that the user can't be banned to the chatroom
         
         #Add the user to a banned list in the database
-
-
 
     else:
         leave_room(chatroom_id, user_id)

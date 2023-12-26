@@ -1,5 +1,5 @@
 from flask import request, jsonify, Blueprint
-from Actions.EventActions import CreateEventAction, GetEventAction, JoinEventAction, LeaveEventAction
+from Actions.EventActions import CreateEventAction, GetEventAction, JoinEventAction, LeaveEventAction, GetUserEventsAction
 
 event = Blueprint('event', __name__)
 
@@ -59,3 +59,13 @@ def leave(Event_Id):
     except Exception as e:
         print(f"An error occurred: {e}")
         return jsonify({'error': 'User could not leave the Event'}), 500
+
+@event.route("user-events/<User_ID>")
+def userGet(User_ID):
+    try:
+        data = GetUserEventsAction.get(User_ID)
+        
+        return jsonify({"message": "Event retrieved", "Data": data}), 200
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({'message': 'Event retrieved failed'}), 500
