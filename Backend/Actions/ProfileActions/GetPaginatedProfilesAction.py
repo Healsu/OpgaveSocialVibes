@@ -1,7 +1,7 @@
 from Database import FireBaseDatabase
 
 def GetFromIndex(start_number):
-    batch_size = 3
+    batch_size = 13
     print(start_number)
     db = FireBaseDatabase.getConnection()
     if start_number == "0":
